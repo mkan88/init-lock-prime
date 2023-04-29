@@ -37,6 +37,10 @@
   "Files to lock behind prime factorisation."
   :type '(repeat file))
 
+(defcustom init-lock-bits 64
+  "Number of bits used to create the prime number"
+  :type 'integer)
+
 (defun init-lock-loop ()
   (let ((N 1)
         (p 2)
@@ -46,8 +50,8 @@
     (while (not (or
                   (and (eq p p-guess) (eq q q-guess))
                   (and (eq p q-guess) (eq q p-guess))))
-      (setq p (string-to-number (shell-command-to-string "openssl prime -generate -bits 16")))
-      (setq q (string-to-number (shell-command-to-string "openssl prime -generate -bits 16")))
+      (setq p (string-to-number (shell-command-to-string (format "openssl prime -generate -bits %s" (/ init-lock-bits 2)))))
+      (setq q (string-to-number (shell-command-to-string (format "openssl prime -generate -bits %s" (/ init-lock-bits 2)))))
       (setq N (* p q))
       (setq p-guess (read-number (format "N = %s, p = ?" N)))
       (setq q-guess (read-number (format "N = %s, q = ?" N))))
