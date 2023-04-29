@@ -41,8 +41,8 @@
   "Number of bits used to create the prime number"
   :type 'integer)
 
-;;;###autoload
 (defun init-lock-loop ()
+  (interactive)
   (let ((N 1)
         (p 2)
         (q 3)
