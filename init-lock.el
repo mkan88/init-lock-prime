@@ -39,7 +39,7 @@
 
 (defcustom init-lock-bits 64
   "Number of bits used to create the prime number"
-  :type 'integer)
+  :type '(integer))
 
 (defun init-lock-loop ()
   (interactive)
