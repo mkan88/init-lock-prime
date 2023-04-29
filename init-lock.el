@@ -1,8 +1,9 @@
 ;;; init-lock.el --- Lock init.el behind simple arithmetic  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Grant Rosson
+;; Copyright (C) 2023  Grant Rosson, Matthew Kan
 
-;; Author: Grant Rosson <grantrosson@gmail.com>
+;; Original Author: Grant Rosson <grantrosson@gmail.com>
+;; Author: Matthew Kan
 ;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -28,24 +29,28 @@
 ;;; Code:
 
 (defgroup init-lock nil
-  "Lock files behind simple arithmetic."
+  "Lock files behind prime factorisation."
   :group 'convenience
   :prefix "init-lock")
 
 (defcustom init-lock-files nil
-  "Files to lock behind arithmetic."
+  "Files to lock behind prime factorisation."
   :type '(repeat file))
 
 (defun init-lock-loop ()
-  (let ((answer 1)
-        (input)
-        (a)
-        (b))
-    (while (not (eq answer input))
-      (setq a (random 1000))
-      (setq b (random 100))
-      (setq answer (- a b))
-      (setq input (read-number (format "%s - %s = " a b))))
+  (let ((N 1)
+        (p 2)
+        (q 3)
+        (p-guess)
+        (q-guess))
+    (while (not (or
+                  (and (eq p p-guess) (eq q q-guess))
+                  (and (eq p q-guess) (eq q p-guess))))
+      (setq p (string-to-number (shell-command-to-string "openssl prime -generate -bits 16")))
+      (setq q (string-to-number (shell-command-to-string "openssl prime -generate -bits 16")))
+      (setq N (* p q))
+      (setq p-guess (read-number (format "N = %s, p = ?" N)))
+      (setq q-guess (read-number (format "N = %s, q = ?" N))))
     nil))
 
 ;;;###autoload
@@ -64,5 +69,6 @@
   (init-lock-loop)
   (advice-remove 'find-file 'file-lock))
 
-(provide 'init-lock)
+(provide 'init-lock-prime)
 ;;; init-lock.el ends here
+
