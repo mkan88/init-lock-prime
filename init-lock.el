@@ -69,6 +69,6 @@
   (init-lock-loop)
   (advice-remove 'find-file 'file-lock))
 
-(provide 'init-lock-prime)
+(provide 'init-lock)
 ;;; init-lock.el ends here
 
