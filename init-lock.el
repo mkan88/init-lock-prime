@@ -33,16 +33,15 @@
   :group 'convenience
   :prefix "init-lock")
 
-;;;###autoload
 (defcustom init-lock-files nil
   "Files to lock behind prime factorisation."
   :type '(repeat file))
 
-;;;###autoload
 (defcustom init-lock-bits 64
   "Number of bits used to create the prime number"
   :type 'integer)
 
+;;;###autoload
 (defun init-lock-loop ()
   (let ((N 1)
         (p 2)
