@@ -2,6 +2,6 @@ Prevents you from meddling with the init file. To use, set a list of files to lo
 then enable locking in your config file:
 
 ```
-(customize-set-variable 'init-lock-files '("/home/mkan/.spacemacs"))
+(customize-set-variable 'init-lock-files '("/home/user/.spacemacs"))
 (init-lock-enable)
 ```
